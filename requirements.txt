@@ -3,10 +3,9 @@ joblib==1.4.2
 lightgbm==4.5.0
 lime==0.2.0.1
 matplotlib==3.10.0
-numpy==2.2.2
+numpy==2.0.0
 pandas==2.2.3
-scikit_learn==1.6.1
-scikit-learn --only-binary :all:
+scikit-learn==1.6.1
 scipy==1.15.1
 seaborn==0.13.2
 shap==0.46.0

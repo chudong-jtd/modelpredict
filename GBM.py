@@ -159,7 +159,7 @@ def main():
 
                 with col1:
                     st.subheader("风险评估结果")
-                    st.metric("危重症发生概率", f"{risk * 100:.1f}%")
+                    st.metric("死亡发生概率", f"{risk * 100:.1f}%")
                     st.progress(risk, text=f"风险等级：{min(int(risk * 10) + 1, 10)}级")
 
                 with col2:
