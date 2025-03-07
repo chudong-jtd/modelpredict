@@ -112,6 +112,10 @@ def generate_shap_plot(model: SklearnModel, scaler: SklearnScaler, input_data: p
     finally:
         if tmp: os.remove(tmp.name)
 
+def clean_input(value: str) -> str:
+    """Replace non-standard negative signs with standard ASCII negative sign"""
+    return value.replace("－", "-").replace("–", "-").replace("—", "-").replace("⁻", "-")
+
 def main():
     model, scaler = load_model_and_scaler()
 
@@ -126,24 +130,26 @@ def main():
     with st.sidebar:
         st.header("Patient Physiological Parameters")
         inputs = {
-            'SBP': float(st.text_input("Systolic Blood Pressure (mmHg)", value="120.0")),
-            'UO': float(st.text_input("Urine Output (mL/24h)", value="1500.0")),
-            'PLT': float(st.text_input("Platelets (×10⁹/L)", value="200.0")),
-            'Na': float(st.text_input("Serum Sodium (mmol/L)", value="140.0")),
-            'LDH': float(st.text_input("Lactate Dehydrogenase (U/L)", value="200.0")),
-            'PH': float(st.text_input("Arterial Blood PH", value="7.4")),
-            'PO2': float(st.text_input("Arterial Partial Pressure of Oxygen (mmHg)", value="95.0")),
-            'Lac': float(st.text_input("Arterial Blood Lactate (mmol/L)", value="1.2")),
-            'BE': float(st.text_input("Arterial Blood Base Excess (mmol/L)", value="0.0")),
-            'AG': float(st.text_input("Anion Gap (mmol/L)", value="12.0")),
-            'WBC': float(st.text_input("White Blood Cell Count (×10⁹/L)", value="8.0")),
-            'LYMP%': float(st.text_input("Lymphocyte Percentage", value="30.0"))
+            'SBP': st.text_input("Systolic Blood Pressure (mmHg)", value="120.0"),
+            'UO': st.text_input("Urine Output (mL/24h)", value="1500.0"),
+            'PLT': st.text_input("Platelets (×10⁹/L)", value="200.0"),
+            'Na': st.text_input("Serum Sodium (mmol/L)", value="140.0"),
+            'LDH': st.text_input("Lactate Dehydrogenase (U/L)", value="200.0"),
+            'PH': st.text_input("Arterial Blood PH", value="7.4"),
+            'PO2': st.text_input("Arterial Partial Pressure of Oxygen (mmHg)", value="95.0"),
+            'Lac': st.text_input("Arterial Blood Lactate (mmol/L)", value="1.2"),
+            'BE': st.text_input("Arterial Blood Base Excess (mmol/L)", value="0.0"),
+            'AG': st.text_input("Anion Gap (mmol/L)", value="12.0"),
+            'WBC': st.text_input("White Blood Cell Count (×10⁹/L)", value="8.0"),
+            'LYMP%': st.text_input("Lymphocyte Percentage", value="30.0")
         }
 
-    # 验证输入值是否为有效浮点数
+    # Clean and convert inputs to float
     for key, value in inputs.items():
         try:
-            inputs[key] = float(value)
+            # Clean non-standard negative signs
+            cleaned_value = clean_input(value)
+            inputs[key] = float(cleaned_value)
         except ValueError:
             st.error(f"Invalid input for {key}. Please enter a valid number.")
             st.stop()
