@@ -172,4 +172,5 @@ def main():
                 st.error(f"Error: {str(e)}")
 
 
-if __name__ == "__main
+if __name__ == "__main__":
+    main()
