@@ -131,14 +131,14 @@ def main():
             'UO': st.slider("Urine Output (mL/24h)", 0.0, 10000.0, 1500.0, 1.0),
             'PLT': st.slider("Platelets (×10⁹/L)", 0.0, 800.0, 200.0, 1.0),
             'Na': st.slider("Serum Sodium (mmol/L)", 100.0, 190.0, 140.0, 0.1),
-            'LDH': st.slider("Lactate Dehydrogenase (U/L)", 50.0, 32000.0, 200.0, 1.0),
+            'LDH': st.slider("Lactate Dehydrogenase (U/L)", 50.0, 12000.0, 200.0, 1.0),
             'PH': st.slider("Arterial Blood PH", 6.7, 7.6, 7.4, 0.01),
-            'PO2': st.slider("Arterial Partial Pressure of Oxygen (mmHg)", 10.0, 600.0, 95.0, 0.1),
+            'PO2': st.slider("Arterial Partial Pressure of Oxygen (mmHg)", 10.0, 400.0, 95.0, 0.1),
             'Lac': st.slider("Arterial Blood Lactate (mmol/L)", 0.5, 30.0, 1.2, 0.1),
             'BE': st.slider("Arterial Blood Base Excess (mmol/L)", -40.0, 30.0, 0.0, 0.1),
             'AG': st.slider("Anion Gap (mmol/L)", 5.0, 50.0, 12.0, 0.1),
-            'WBC': st.slider("White Blood Cell Count (×10⁹/L)", 0.0, 400.0, 8.0, 0.01),
-            'LYMP%': st.slider("Lymphocyte Percentage", 0.0, 99.0, 30.0, 0.01)
+            'WBC': st.slider("White Blood Cell Count (×10⁹/L)", 0.0, 100.0, 8.0, 0.01),
+            'LYMP%': st.slider("Lymphocyte Percentage", 0.0, 90.0, 30.0, 0.01)
         }
 
     validate_inputs(inputs['PH'], inputs['PO2'], inputs['Lac'])
