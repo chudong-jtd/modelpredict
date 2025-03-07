@@ -125,20 +125,20 @@ def main():
 
     # Complete sidebar input components
     with st.sidebar:
-    st.header("Patient Physiological Parameters")
-    inputs = {
-        'SBP': st.number_input("Systolic Blood Pressure (mmHg)", value=120.0, step=1.0),
-        'UO': st.number_input("Urine Output (mL/24h)", value=1500.0, step=1.0),
-        'PLT': st.number_input("Platelets (×10⁹/L)", value=200.0, step=1.0),
-        'Na': st.number_input("Serum Sodium (mmol/L)", value=140.0, step=0.1),
-        'LDH': st.number_input("Lactate Dehydrogenase (U/L)", value=200.0, step=1.0),
-        'PH': st.number_input("Arterial Blood PH", value=7.4, step=0.01),
-        'PO2': st.number_input("Arterial Partial Pressure of Oxygen (mmHg)", value=95.0, step=0.1),
-        'Lac': st.number_input("Arterial Blood Lactate (mmol/L)", value=1.2, step=0.1),
-        'BE': st.number_input("Arterial Blood Base Excess (mmol/L)", value=0.0, step=0.1),
-        'AG': st.number_input("Anion Gap (mmol/L)", min_value=5.0, step=0.1),
-        'WBC': st.number_input("White Blood Cell Count (×10⁹/L)", value=8.0, step=0.01),
-        'LYMP%': st.number_input("Lymphocyte Percentage", value=30.0, step=0.01)
+        st.header("Patient Physiological Parameters")
+        inputs = {
+            'SBP': st.number_input("Systolic Blood Pressure (mmHg)", value=120.0, step=1.0),
+            'UO': st.number_input("Urine Output (mL/24h)", value=1500.0, step=1.0),
+            'PLT': st.number_input("Platelets (×10⁹/L)", value=200.0, step=1.0),
+            'Na': st.number_input("Serum Sodium (mmol/L)", value=140.0, step=0.1),
+            'LDH': st.number_input("Lactate Dehydrogenase (U/L)", value=200.0, step=1.0),
+            'PH': st.number_input("Arterial Blood PH", value=7.4, step=0.01),
+            'PO2': st.number_input("Arterial Partial Pressure of Oxygen (mmHg)", value=95.0, step=0.1),
+            'Lac': st.number_input("Arterial Blood Lactate (mmol/L)", value=1.2, step=0.1),
+            'BE': st.number_input("Arterial Blood Base Excess (mmol/L)", value=0.0, step=0.1),
+            'AG': st.number_input("Anion Gap (mmol/L)", value=12.0, step=0.1),
+            'WBC': st.number_input("White Blood Cell Count (×10⁹/L)", value=8.0, step=0.01),
+            'LYMP%': st.number_input("Lymphocyte Percentage", value=30.0, step=0.01)
         }
 
     validate_inputs(inputs['PH'], inputs['PO2'], inputs['Lac'])
