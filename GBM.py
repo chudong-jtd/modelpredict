@@ -124,21 +124,21 @@ def main():
     st.title("🏥 Critical Illness AKI Mortality Risk Prediction System")
 
     # Complete sidebar input components
-    with st.sidebar:
-        st.header("Patient Physiological Parameters")
-        inputs = {
-            'SBP': st.slider("Systolic Blood Pressure (mmHg)", 30.0, 250.0, 120.0, 1.0),
-            'UO': st.slider("Urine Output (mL/24h)", 0.0, 10000.0, 1500.0, 1.0),
-            'PLT': st.slider("Platelets (×10⁹/L)", 0.0, 800.0, 200.0, 1.0),
-            'Na': st.slider("Serum Sodium (mmol/L)", 100.0, 190.0, 140.0, 0.1),
-            'LDH': st.slider("Lactate Dehydrogenase (U/L)", 50.0, 12000.0, 200.0, 1.0),
-            'PH': st.slider("Arterial Blood PH", 6.7, 7.6, 7.4, 0.01),
-            'PO2': st.slider("Arterial Partial Pressure of Oxygen (mmHg)", 10.0, 400.0, 95.0, 0.1),
-            'Lac': st.slider("Arterial Blood Lactate (mmol/L)", 0.5, 30.0, 1.2, 0.1),
-            'BE': st.slider("Arterial Blood Base Excess (mmol/L)", -40.0, 30.0, 0.0, 0.1),
-            'AG': st.slider("Anion Gap (mmol/L)", 5.0, 50.0, 12.0, 0.1),
-            'WBC': st.slider("White Blood Cell Count (×10⁹/L)", 0.0, 100.0, 8.0, 0.01),
-            'LYMP%': st.slider("Lymphocyte Percentage", 0.0, 90.0, 30.0, 0.01)
+    wwith st.sidebar:
+    st.header("Patient Physiological Parameters")
+    inputs = {
+        'SBP': st.number_input("Systolic Blood Pressure (mmHg)", value=120.0, step=1.0),
+        'UO': st.number_input("Urine Output (mL/24h)", value=1500.0, step=1.0),
+        'PLT': st.number_input("Platelets (×10⁹/L)", value=200.0, step=1.0),
+        'Na': st.number_input("Serum Sodium (mmol/L)", value=140.0, step=0.1),
+        'LDH': st.number_input("Lactate Dehydrogenase (U/L)", value=200.0, step=1.0),
+        'PH': st.number_input("Arterial Blood PH", value=7.4, step=0.01),
+        'PO2': st.number_input("Arterial Partial Pressure of Oxygen (mmHg)", value=95.0, step=0.1),
+        'Lac': st.number_input("Arterial Blood Lactate (mmol/L)", value=1.2, step=0.1),
+        'BE': st.number_input("Arterial Blood Base Excess (mmol/L)", value=0.0, step=0.1),
+        'AG': st.number_input("Anion Gap (mmol/L)", min_value=5.0, step=0.1),
+        'WBC': st.number_input("White Blood Cell Count (×10⁹/L)", value=8.0, step=0.01),
+        'LYMP%': st.number_input("Lymphocyte Percentage", value=30.0, step=0.01)
         }
 
     validate_inputs(inputs['PH'], inputs['PO2'], inputs['Lac'])
