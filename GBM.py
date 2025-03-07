@@ -169,10 +169,9 @@ def main():
                     st.progress(risk, text=f"Risk Level: {min(int(risk * 10) + 1, 10)}")
 
                 with col2:
-                    st.subheader("Key Influencing Factors")
+                    st.subheader("关键影响因素")
                     html_content = generate_shap_plot(model, scaler, input_df)
                     st_html(html_content, height=600, scrolling=False)
-
 
             except Exception as e:
                 status.update(label="分析失败", state="error")
@@ -180,4 +179,4 @@ def main():
 
 
 if __name__ == "__main__":
-　　main()
+    main()
