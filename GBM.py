@@ -16,6 +16,13 @@ from streamlit.components.v1 import html as st_html
 SklearnModel = RandomForestClassifier
 SklearnScaler = StandardScaler
 
+def validate_and_convert_to_float(input_value: str, input_name: str) -> float:
+    """Validate and convert input string to float"""
+    try:
+        return float(input_value)
+    except ValueError:
+        st.error(f"Invalid input for {input_name}. Please enter a valid number.")
+        return None
 
 def load_model_and_scaler() -> Tuple[SklearnModel, SklearnScaler]:
     """Load model and scaler"""
@@ -27,7 +34,6 @@ def load_model_and_scaler() -> Tuple[SklearnModel, SklearnScaler]:
     except Exception as e:
         st.error(f"Initialization failed: {str(e)}")
         st.stop()
-
 
 def validate_inputs(PH: float, PO2: float, Lac: float):
     """Validate clinical parameters"""
@@ -59,7 +65,6 @@ def validate_inputs(PH: float, PO2: float, Lac: float):
         else:
             st.warning(f"⚠ {alert}")
 
-
 def make_prediction(model: SklearnModel, scaler: SklearnScaler, input_data: pd.DataFrame) -> float:
     """Perform prediction"""
     try:
@@ -69,7 +74,6 @@ def make_prediction(model: SklearnModel, scaler: SklearnScaler, input_data: pd.D
     except Exception as e:
         st.error(f"Prediction failed: {str(e)}")
         st.stop()
-
 
 def generate_shap_plot(model: SklearnModel, scaler: SklearnScaler, input_data: pd.DataFrame) -> str:
     """Generate optimized SHAP visualization"""
@@ -112,7 +116,6 @@ def generate_shap_plot(model: SklearnModel, scaler: SklearnScaler, input_data: p
     finally:
         if tmp: os.remove(tmp.name)
 
-
 def main():
     model, scaler = load_model_and_scaler()
 
@@ -123,23 +126,26 @@ def main():
     )
     st.title("🏥 Critical Illness AKI Mortality Risk Prediction System")
 
-    # Complete sidebar input components
     with st.sidebar:
         st.header("Patient Physiological Parameters")
         inputs = {
-            'SBP': float(st.text_input("Systolic Blood Pressure (mmHg)", value="120.0")),
-            'UO': float(st.text_input("Urine Output (mL/24h)", value="1500.0")),
-            'PLT': float(st.text_input("Platelets (×10⁹/L)", value="200.0")),
-            'Na': float(st.text_input("Serum Sodium (mmol/L)", value="140.0")),
-            'LDH': float(st.text_input("Lactate Dehydrogenase (U/L)", value="200.0")),
-            'PH': float(st.text_input("Arterial Blood PH", value="7.4")),
-            'PO2': float(st.text_input("Arterial Partial Pressure of Oxygen (mmHg)", value="95.0")),
-            'Lac': float(st.text_input("Arterial Blood Lactate (mmol/L)", value="1.2")),
-            'BE': float(st.text_input("Arterial Blood Base Excess (mmol/L)", value="0.0")),
-            'AG': float(st.text_input("Anion Gap (mmol/L)", value="12.0")),
-            'WBC': float(st.text_input("White Blood Cell Count (×10⁹/L)", value="8.0")),
-            'LYMP%': float(st.text_input("Lymphocyte Percentage", value="30.0"))
+            'SBP': validate_and_convert_to_float(st.text_input("Systolic Blood Pressure (mmHg)", value="120.0"), "Systolic Blood Pressure"),
+            'UO': validate_and_convert_to_float(st.text_input("Urine Output (mL/24h)", value="1500.0"), "Urine Output"),
+            'PLT': validate_and_convert_to_float(st.text_input("Platelets (×10⁹/L)", value="200.0"), "Platelets"),
+            'Na': validate_and_convert_to_float(st.text_input("Serum Sodium (mmol/L)", value="140.0"), "Serum Sodium"),
+            'LDH': validate_and_convert_to_float(st.text_input("Lactate Dehydrogenase (U/L)", value="200.0"), "Lactate Dehydrogenase"),
+            'PH': validate_and_convert_to_float(st.text_input("Arterial Blood PH", value="7.4"), "Arterial Blood PH"),
+            'PO2': validate_and_convert_to_float(st.text_input("Arterial Partial Pressure of Oxygen (mmHg)", value="95.0"), "Arterial Partial Pressure of Oxygen"),
+            'Lac': validate_and_convert_to_float(st.text_input("Arterial Blood Lactate (mmol/L)", value="1.2"), "Arterial Blood Lactate"),
+            'BE': validate_and_convert_to_float(st.text_input("Arterial Blood Base Excess (mmol/L)", value="0.0"), "Arterial Blood Base Excess"),
+            'AG': validate_and_convert_to_float(st.text_input("Anion Gap (mmol/L)", value="12.0"), "Anion Gap"),
+            'WBC': validate_and_convert_to_float(st.text_input("White Blood Cell Count (×10⁹/L)", value="8.0"), "White Blood Cell Count"),
+            'LYMP%': validate_and_convert_to_float(st.text_input("Lymphocyte Percentage", value="30.0"), "Lymphocyte Percentage")
         }
+
+    if any(value is None for value in inputs.values()):
+        st.warning("Please correct the invalid inputs before proceeding.")
+        return
 
     validate_inputs(inputs['PH'], inputs['PO2'], inputs['Lac'])
     input_df = pd.DataFrame([inputs])
@@ -167,10 +173,11 @@ def main():
                     html_content = generate_shap_plot(model, scaler, input_df)
                     st_html(html_content, height=600, scrolling=False)
 
+
             except Exception as e:
-                status.update(label="Analysis failed", state="error")
-                st.error(f"Error: {str(e)}")
+                status.update(label="分析失败", state="error")
+                st.error(f"错误: {str(e)}")
 
 
 if __name__ == "__main__":
-    main()
+main()
