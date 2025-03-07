@@ -124,7 +124,7 @@ def main():
     st.title("🏥 Critical Illness AKI Mortality Risk Prediction System")
 
     # Complete sidebar input components
-    wwith st.sidebar:
+    with st.sidebar:
     st.header("Patient Physiological Parameters")
     inputs = {
         'SBP': st.number_input("Systolic Blood Pressure (mmHg)", value=120.0, step=1.0),
